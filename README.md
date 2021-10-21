@@ -57,10 +57,14 @@ Permită studentului să:
 &nbsp;
 
 ![Schema bazei de date](./Database%20schema.png)
-
-
+\
+&nbsp;
+\
+&nbsp;
 \
 &nbsp;
 ### Flow pentru logica din spatele codurilor QR
 \
 &nbsp;
+
+![Flow QR](./QRflow.png)
