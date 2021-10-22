@@ -1,8 +1,8 @@
-package com.upb.qresent.professor;
+package com.upb.qresent.user;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProfessorRepository extends MongoRepository<Professor, String> {
+public interface UserRepository extends MongoRepository<User, String> {
 }

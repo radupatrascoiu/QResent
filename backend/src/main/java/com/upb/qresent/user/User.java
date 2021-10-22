@@ -1,4 +1,4 @@
-package com.upb.qresent.student;
+package com.upb.qresent.user;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.Set;
 @ToString
 @EqualsAndHashCode
 @Document(collection = "students")
-public class Student {
+public class User {
     @Id
     private ObjectId id;
     private String name;
@@ -24,14 +24,13 @@ public class Student {
     private String googleId;
     private Set<ObjectId> courses;
 
-    public Student(String name, String ldapId, String classroom, String googleId, Set<ObjectId> courses) {
+    public User(String name, String ldapId, String classroom, String googleId, Set<ObjectId> courses) {
         this.name = name;
         this.ldapId = ldapId;
         this.classroom = classroom;
         this.googleId = googleId;
         this.courses = courses;
     }
-
 
     public boolean insertCourseIntoCourses(ObjectId courseId) {
         return courses.add(courseId);
