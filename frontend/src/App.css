@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+.menu-items {
+  display: inline;
+}
+
+.rightGrid {
+  right: 0;
+  position: absolute;
+}
+
+a {
+  color: #FFF;
+  text-decoration: none;
+}
+a:hover {
+   color: #FFF
+}
