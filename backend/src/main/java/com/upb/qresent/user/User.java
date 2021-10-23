@@ -1,9 +1,6 @@
 package com.upb.qresent.user;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Getter
 @ToString
 @EqualsAndHashCode
+@AllArgsConstructor
 @Document(collection = "students")
 public class User {
     @Id
@@ -23,14 +21,6 @@ public class User {
     private String classroom;
     private String googleId;
     private Set<ObjectId> courses;
-
-    public User(String name, String ldapId, String classroom, String googleId, Set<ObjectId> courses) {
-        this.name = name;
-        this.ldapId = ldapId;
-        this.classroom = classroom;
-        this.googleId = googleId;
-        this.courses = courses;
-    }
 
     public boolean insertCourseIntoCourses(ObjectId courseId) {
         return courses.add(courseId);
