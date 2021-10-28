@@ -1,6 +1,6 @@
 {
-  "realm": "SpringBootKeycloak",
-  "auth-server-url": "http://localhost:8080/auth/",
+  "realm": "QResent2.0",
+  "auth-server-url": "https://moviark.com/auth/",
   "ssl-required": "external",
   "resource": "login-app",
   "public-client": true,
