@@ -2,11 +2,19 @@ import axios from 'axios';
 import { config } from '../constants';
 
 export const userApi = {
-    getStudent,
+    getStudent, getCourse
 }
 
 function getStudent(token) {
     return instance.get(`/api/user/student/`, {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
+
+function getCourse(token, courseID) {
+    return instance.get(`/api/course/${courseID}`, {
         headers: {
             'Authorization': bearerAuth(token)
         }
