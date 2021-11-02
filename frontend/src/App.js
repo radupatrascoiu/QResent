@@ -1,11 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import Home from './components/home';
 import Student from './components/student';
 import { withHooksKC } from './utils/withHooksKC';
 import { Component } from 'react';
 import Navbar from './components/navbar';
+import Course from './components/course';
+import presenceList from './components/presenceList';
+import NotFound from './components/notfound';
+import ValidateQR from './services/validateQR';
 
 class App extends Component {
   render() {
@@ -14,8 +18,14 @@ class App extends Component {
         <BrowserRouter>
           <Navbar></Navbar>
           <div className="container">
-            <Route exact path="/" component={Home} />
-            <Route path="/secured" component={Student} />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/course/:courseID" component={Course} />
+              <Route path="/course/:courseID/presencelist/:presenceListID" component={presenceList} />
+              <Route path="/validate/:courseID/:presenceListID/:qrcodeID" component={ValidateQR} />
+              <Route path="/secured" component={Student} />
+              <Route path="*"><NotFound /></Route>
+            </Switch>
           </div>
         </BrowserRouter>
       </div>
