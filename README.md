@@ -4,6 +4,21 @@
 \
 &nbsp;
 
+### Componenta echipei
+
+
+
+* Vitoga Patrick, 344C5
+* Velea Alin, 341C2
+* Patrascoiu Radu, 344C5
+* Mircia Camelia, 343C5
+* Dumitru Andrei, 343C5
+* Apostol Alexandru, 341C2
+
+
+### Organizarea echipei
+https://docs.google.com/document/d/1zUTpec2u40c6PFR58w9ZdwB1DsjZbojqtyX4u6uRgX8/edit?usp=sharing
+
 ### Scopul proiectului
 
 
@@ -15,6 +30,7 @@ Arhitectura soluției și tehnologiile folosite sunt la latitudinea studenților
 
 
 ### Descrierea proiectului
+Sursă: https://ocw.cs.pub.ro/courses/mps/proiect/proiect-1
 
 Aplicația QResent trebuie să:
 
@@ -45,6 +61,11 @@ Permită studentului să:
 * să vizualizeze statisticile create de profesor legate de numărul de cursanți la curs sub formă de grafice
 * să scaneze codurile QR generate de profesor
 
+
+### Tehnologii folosite
+
+* Spring (Backend) + React (Frontend) + Mongo (Database) + Keycloak (Autentificare/Securitate)
+* IDEs: Intellij, Visual Studio
 \
 &nbsp;
 ## Implementare
