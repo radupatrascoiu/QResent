@@ -4,6 +4,18 @@
 \
 &nbsp;
 
+### Componenta echipei
+
+
+
+* Vitoga Patrick, 344C5
+* Velea Alin, 341C2
+* Patrascoiu Radu, 344C5
+* Mircia Camelia, 343C5
+* Dumitru Andrei, 343C5
+* Apostol Alexandru, 341C2
+
+
 ### Scopul proiectului
 
 
@@ -15,7 +27,7 @@ Arhitectura soluției și tehnologiile folosite sunt la latitudinea studenților
 
 
 ### Descrierea proiectului
-
+Sursă: https://ocw.cs.pub.ro/courses/mps/proiect/proiect-1
 Aplicația QResent trebuie să:
 
 
