@@ -8,7 +8,7 @@ import { useKeycloak } from '@react-keycloak/web';
 const PresenceList = () => {
     const { initialized, keycloak } = useKeycloak();
     const {courseID, presenceListID} = useParams()
-    const [qrObject, setQRObject] = useState(null)
+    const [presenceList, setPresenceList] = useState(null)
     const [isActive, setIsActive] = useState(true)
     const [intervalHandler, setIntervalHandler] = useState(null)
     const { QR_EXPIRATION_TIME, PRESENCELIST_EXPIRATION_TIME } = config
@@ -17,7 +17,7 @@ const PresenceList = () => {
     // TODO get the QR code and set it
     const updateQR = async () => {
         console.log("A new QR code was generated")
-        setQRObject({"id": "12431121"})
+        setPresenceList({"qrId": "123141541412"})
     }
 
     // update qr code every 30 seconds for the next 120 second
@@ -45,7 +45,7 @@ const PresenceList = () => {
         <div className="presenceListContainer">
             <br/>
             <div className="qrContainer">
-                {qrObject && isActive && QRTool.generateQR(`https://localhost:8080/validate/${courseID}/${presenceListID}/${qrObject.id}`) }
+                {presenceList && isActive && QRTool.generateQR(`https://localhost:8080/validate/${courseID}/${presenceListID}/${presenceList.qrID}`) }
                 {!isActive && <h1> You no loger can scan QR codes. </h1> }
             </div>
             <div className="attendeesTable">

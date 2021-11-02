@@ -5,7 +5,7 @@ import { userApi } from '../services/userApi';
 import { useKeycloak } from '@react-keycloak/web';
 import { useMediaQuery } from 'react-responsive'
 import { useHistory } from "react-router-dom";
-
+import {Button} from "@mui/material"
 
 
 const Course = () => {
@@ -69,8 +69,8 @@ const Course = () => {
                     {course?.information } <br/>
                     {course?.bonuses } <br/>
                     {course?.schedule } <br/>
-                    <button onClick={generatePresenceList}>Generate a presence list</button> <br/>
-                    <button>Export presence list</button> <br/>
+                    <Button onClick={generatePresenceList}>Generate a presence list</Button> <br/>
+                    <Button>Export presence list</Button> <br/>
 
                 </div>
             }
