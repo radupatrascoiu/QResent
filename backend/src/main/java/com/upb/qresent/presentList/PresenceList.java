@@ -12,7 +12,6 @@ import java.util.Set;
 @Getter
 @ToString
 @EqualsAndHashCode
-@AllArgsConstructor
 @Document(collection = "presenceLists")
 public class PresenceList {
     @Id
@@ -23,6 +22,15 @@ public class PresenceList {
     private Date timestampCreated;
     private Date timestampClosed;
     private Set<ObjectId> students;
+
+    public PresenceList(ObjectId courseId, ObjectId professorId, ObjectId qrId, Date timestampCreated, Date timestampClosed, Set<ObjectId> students) {
+        this.courseId = courseId;
+        this.professorId = professorId;
+        this.qrId = qrId;
+        this.timestampCreated = timestampCreated;
+        this.timestampClosed = timestampClosed;
+        this.students = students;
+    }
 
     public boolean insertStudentIntoPresenceList(ObjectId studentId) {
         return students.add(studentId);

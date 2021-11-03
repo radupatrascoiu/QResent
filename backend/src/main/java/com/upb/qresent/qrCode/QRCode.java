@@ -18,14 +18,12 @@ import java.util.Date;
 public class QRCode {
     @Id
     private ObjectId id;
-    private ObjectId courseId;
-    private String link;
+    private ObjectId presenceListId;
     private Date timestampCreated;
     private Date timestampExpires;
 
-    public QRCode(ObjectId courseId, String link, Date timestampCreated, Date timestampExpires) {
-        this.courseId = courseId;
-        this.link = link;
+    public QRCode(ObjectId presenceListId, Date timestampCreated, Date timestampExpires) {
+        this.presenceListId = presenceListId;
         this.timestampCreated = timestampCreated;
         this.timestampExpires = timestampExpires;
     }

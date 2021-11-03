@@ -11,16 +11,30 @@ import java.util.Set;
 @Getter
 @ToString
 @EqualsAndHashCode
-@AllArgsConstructor
-@Document(collection = "students")
+@Document(collection = "users")
 public class User {
     @Id
     private ObjectId id;
     private String name;
+    private String role;
     private String ldapId;
     private String classroom;
-    private String googleId;
     private Set<ObjectId> courses;
+
+    public User(String name, String role, String ldapId, String classroom, Set<ObjectId> courses) {
+        this.name = name;
+        this.role = role;
+        this.ldapId = ldapId;
+        this.classroom = classroom;
+        this.courses = courses;
+    }
+
+    public User(String name, String role, String ldapId, Set<ObjectId> courses) {
+        this.name = name;
+        this.role = role;
+        this.ldapId = ldapId;
+        this.courses = courses;
+    }
 
     public boolean insertCourseIntoCourses(ObjectId courseId) {
         return courses.add(courseId);
