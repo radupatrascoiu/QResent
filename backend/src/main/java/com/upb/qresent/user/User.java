@@ -36,6 +36,10 @@ public class User {
         this.courses = courses;
     }
 
+    public User() {
+
+    }
+
     public boolean insertCourseIntoCourses(ObjectId courseId) {
         return courses.add(courseId);
     }
