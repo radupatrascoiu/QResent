@@ -34,6 +34,9 @@ class Navbar extends Component {
                                     <Button color="inherit">
                                         <Link to="/">Home</Link>
                                     </Button>
+                                    <Button color="inherit">
+                                        <Link to="/courses">Courses</Link>
+                                    </Button>
                                 </Typography>
                             </Grid>
                         </Grid>

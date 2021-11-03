@@ -3,6 +3,7 @@ package com.upb.qresent.presentList;
 import com.upb.qresent.utils.ResponseDto;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,13 +20,13 @@ public class PresenceListController {
     // TODO refresh QR code
 
     @PostMapping("/presencelist/{courseId}")
-//    @PreAuthorize("hasRole('professor')")
+    @PreAuthorize("hasRole('professor')")
     public PresenceList createPresenceList(@PathVariable(value="courseId") ObjectId courseId) {
         return presenceListService.createPresenceList(courseId);
     }
 
     @GetMapping("/presencelist/{presencelistId}")
-//    @PreAuthorize("hasRole('professor')")
+    @PreAuthorize("hasRole('professor')")
     public ResponseEntity<?> getPresenceList(@PathVariable(value="presencelistId") ObjectId presencelistId) {
         PresenceList presenceList = presenceListService.getPresenceList(presencelistId);
         if (presenceList == null) {
