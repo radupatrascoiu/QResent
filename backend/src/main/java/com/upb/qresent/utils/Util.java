@@ -8,9 +8,14 @@ import com.upb.qresent.qrCode.QRCode;
 import com.upb.qresent.qrCode.QRCodeRepository;
 import com.upb.qresent.user.User;
 import com.upb.qresent.user.UserRepository;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Set;
@@ -43,17 +48,24 @@ public class Util {
         courseRepository.save(ubd);
         courseRepository.save(pp);
 
-        User radu = userRepository.insert(new User("Radu Patrascoiu", "student", "radu.patrascoiu@stud.com", "344C5", Set.of(ubd.getId())));
-        User patrick = userRepository.insert(new User("Patrick Vitoga","student","patrick.vitoga@stud.com", "344C5", Set.of(ubd.getId())));
-        User alin = userRepository.insert(new User("Alin Velea","student", "alin.velea@stud.com", "344C2", Set.of(ubd.getId())));
-        User alex = userRepository.insert(new User("Alexandru Apostol","student", "alex.apostol@stud.com", "344C2", Set.of(ubd.getId())));
-        User cami = userRepository.insert(new User("Gabriela Camelia","student","gabriela.camelia@stud.com", "344C5", Set.of(ubd.getId())));
-        User andrei = userRepository.insert(new User("Andrei Clej","student", "andrei.clej@stud.com", "344C5", Set.of(ubd.getId())));
-        PresenceList presenceList = presenceListRepository.insert(new PresenceList(ubd.getId(), boiceaRegele.getId(), null, Date.from(Instant.now()), Date.from(Instant.now()), Set.of(radu.getId(), patrick.getId(), alin.getId(), alex.getId(), cami.getId(), andrei.getId())));
-        QRCode qrCode = qrCodeRepository.insert(new QRCode(ubd.getId(), Date.from(Instant.now()), Date.from(Instant.now())));
+//        User radu = userRepository.insert(new User("Radu Patrascoiu", "student", "radu.patrascoiu@stud.com", "344C5", Set.of(ubd.getId())));
+//        User patrick = userRepository.insert(new User("Patrick Vitoga","student","patrick.vitoga@stud.com", "344C5", Set.of(ubd.getId())));
+//        User alin = userRepository.insert(new User("Alin Velea","student", "alin.velea@stud.com", "344C2", Set.of(ubd.getId())));
+//        User alex = userRepository.insert(new User("Alexandru Apostol","student", "alex.apostol@stud.com", "344C2", Set.of(ubd.getId())));
+//        User cami = userRepository.insert(new User("Gabriela Camelia","student","gabriela.camelia@stud.com", "344C5", Set.of(ubd.getId())));
+//        User andrei = userRepository.insert(new User("Andrei Clej","student", "andrei.clej@stud.com", "344C5", Set.of(ubd.getId())));
+//        PresenceList presenceList = presenceListRepository.insert(new PresenceList(ubd.getId(), boiceaRegele.getId(), null, Date.from(Instant.now()), Date.from(Instant.now()), Set.of(radu.getId(), patrick.getId(), alin.getId(), alex.getId(), cami.getId(), andrei.getId())));
+//        QRCode qrCode = qrCodeRepository.insert(new QRCode(ubd.getId(), Date.from(Instant.now()), Date.from(Instant.now())));
+//
+//        presenceList.setQrId(qrCode.getId());
+//        presenceListRepository.save(presenceList);
 
-        presenceList.setQrId(qrCode.getId());
-        presenceListRepository.save(presenceList);
+    }
 
+    public User getUserFromRequest(HttpServletRequest httpServletRequest) {
+        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) httpServletRequest.getUserPrincipal();
+        KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
+        if (principal == null) return null;
+        return userRepository.findByLdapId(principal.getName());
     }
 }
