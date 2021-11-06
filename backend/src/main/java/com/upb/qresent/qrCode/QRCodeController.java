@@ -1,12 +1,9 @@
 package com.upb.qresent.qrCode;
 
-import com.upb.qresent.presentList.PresenceList;
 import com.upb.qresent.user.User;
 import com.upb.qresent.utils.ResponseDto;
 import com.upb.qresent.utils.Util;
 import org.bson.types.ObjectId;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -2,10 +2,8 @@ package com.upb.qresent.qrCode;
 
 import com.upb.qresent.course.Course;
 import com.upb.qresent.course.CourseRepository;
-import com.upb.qresent.course.CourseService;
 import com.upb.qresent.presentList.PresenceList;
 import com.upb.qresent.presentList.PresenceListRepository;
-import com.upb.qresent.presentList.PresenceListService;
 import com.upb.qresent.user.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.util.Pair;
@@ -41,9 +39,9 @@ public class QRCodeService {
         if(!qrCode.getPresenceListId().equals(presenceListId)) return Pair.of(false, "Your QR code doesn't match the presence list.");
         if(!presenceList.getCourseId().equals(courseId)) return Pair.of(false, "The presence list doesn't match the provided course.");
         if(!presenceList.getQrId().equals(qrID)) return Pair.of(false, "Your QR code is not recognized in the presence list.");
-        if(now.after(qrCode.getTimestampExpires())) return Pair.of(false, "The QR code is expired.");
         if(now.after(presenceList.getTimestampClosed())) return Pair.of(false, "The presence list is closed.");
-        if(!presenceList.getStudents().contains(user.getId())) return Pair.of(false, "Sorry, you are already marked as present.");
+        if(now.after(qrCode.getTimestampExpires())) return Pair.of(false, "The QR code is expired.");
+        if(presenceList.getStudents().contains(user.getId())) return Pair.of(false, "Sorry, you are already marked as present.");
         // TODO optional, check if the course intervals match with the current time
 
         if (!presenceList.insertStudentIntoPresenceList(user.getId())) return Pair.of(false, "Sorry, we couldn't add you this time. Please try again!");

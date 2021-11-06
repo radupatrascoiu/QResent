@@ -1,5 +1,6 @@
 package com.upb.qresent.presentList;
 
+import com.upb.qresent.course.CourseRepository;
 import com.upb.qresent.utils.ResponseDto;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class PresenceListController {
     private final PresenceListService presenceListService;
+    private final CourseRepository courseRepository;
 
-    public PresenceListController(PresenceListService presenceListService) {
+    public PresenceListController(PresenceListService presenceListService, CourseRepository courseRepository) {
         this.presenceListService = presenceListService;
+        this.courseRepository = courseRepository;
+    }
+
+    @PostMapping("/create")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> aiurealea() {
+        PresenceList presenceList = presenceListService.createPresenceList(courseRepository.findByName("UBD").getId());
+        if (presenceList == null) {
+            return ResponseEntity.badRequest().body(new ResponseDto("Failed", ""));
+        }
+        return ResponseEntity.ok().body(new ResponseDto("Success", presenceList.getId().toString()));
     }
 
     @PostMapping("/presencelist/{courseId}")

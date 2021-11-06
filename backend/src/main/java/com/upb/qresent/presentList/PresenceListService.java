@@ -4,10 +4,10 @@ import com.upb.qresent.course.Course;
 import com.upb.qresent.course.CourseRepository;
 import com.upb.qresent.qrCode.QRCode;
 import com.upb.qresent.qrCode.QRCodeRepository;
-import com.upb.qresent.qrCode.QRCodeService;
 import com.upb.qresent.utils.Constants;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -28,14 +28,15 @@ public class PresenceListService {
         this.qrCodeRepository = qrCodeRepository;
     }
 
+    @Transactional
     public PresenceList createPresenceList(ObjectId courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId.toString());
 
         if (courseOptional.isPresent()) {
             Course course = courseOptional.get();
             ObjectId professorId = course.getProfessorId();
-            PresenceList presenceList = presenceListRepository.insert(new PresenceList(courseId, professorId, null, Date.from(Instant.now()), Date.from(Instant.now().plus(Duration.ofMillis(Constants.presenceListExpirationTime))), Set.of()));
-            QRCode qrCode = qrCodeRepository.insert(new QRCode(presenceList.getId(), Date.from(Instant.now()), Date.from(Instant.now().plus(Duration.ofMillis(Constants.qrCodeExpirationTime)))));
+            PresenceList presenceList = presenceListRepository.save(new PresenceList(courseId, professorId, null, Date.from(Instant.now()), Date.from(Instant.now().plus(Duration.ofMillis(Constants.presenceListExpirationTime))), Set.of()));
+            QRCode qrCode = qrCodeRepository.save(new QRCode(presenceList.getId(), Date.from(Instant.now()), Date.from(Instant.now().plus(Duration.ofMillis(Constants.qrCodeExpirationTime)))));
 
             presenceList.setQrId(qrCode.getId());
             return presenceListRepository.save(presenceList);
@@ -59,8 +60,9 @@ public class PresenceListService {
         // generate a new QR if the previous one expired, but presence list didn't
         if (!now.after(presenceList.getTimestampClosed())) {
             ObjectId qrID = presenceList.getQrId();
-            Optional<QRCode> optionalQR = qrCodeRepository.findById(qrID.toString());
-            QRCode qr = optionalQR.orElse(null);
+            String qrIDString = qrID.toString();
+
+            QRCode qr = qrCodeRepository.findById(qrIDString).orElse(null);
             if (qr == null) return null;
 
             if (now.after(qr.getTimestampExpires())) {
