@@ -1,5 +1,6 @@
 package com.upb.qresent.presentList;
 
+import com.upb.qresent.course.CourseRepository;
 import com.upb.qresent.utils.ResponseDto;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
@@ -10,29 +11,41 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowCredentials = "true")
 @RequestMapping("/api")
 public class PresenceListController {
-    private PresenceListService presenceListService;
+    private final PresenceListService presenceListService;
+    private final CourseRepository courseRepository;
 
-    public PresenceListController(PresenceListService presenceListService) {
+    public PresenceListController(PresenceListService presenceListService, CourseRepository courseRepository) {
         this.presenceListService = presenceListService;
+        this.courseRepository = courseRepository;
     }
 
-    // TODO metoda sa validez un cod qr
-    // TODO refresh QR code
+    @PostMapping("/create")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> aiurealea() {
+        PresenceList presenceList = presenceListService.createPresenceList(courseRepository.findByName("UBD").getId());
+        if (presenceList == null) {
+            return ResponseEntity.badRequest().body(new ResponseDto("Failed", ""));
+        }
+        return ResponseEntity.ok().body(new ResponseDto("Success", presenceList.getId().toString()));
+    }
 
     @PostMapping("/presencelist/{courseId}")
-    @PreAuthorize("hasRole('professor')")
-    public PresenceList createPresenceList(@PathVariable(value="courseId") ObjectId courseId) {
-        return presenceListService.createPresenceList(courseId);
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> createPresenceList(@PathVariable(value="courseId") ObjectId courseId) {
+        PresenceList presenceList = presenceListService.createPresenceList(courseId);
+        if (presenceList == null) {
+            return ResponseEntity.badRequest().body(new ResponseDto("Failed", ""));
+        }
+        return ResponseEntity.ok().body(new ResponseDto("Success", presenceList.getId().toString()));
     }
 
     @GetMapping("/presencelist/{presencelistId}")
-    @PreAuthorize("hasRole('professor')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getPresenceList(@PathVariable(value="presencelistId") ObjectId presencelistId) {
-        PresenceList presenceList = presenceListService.getPresenceList(presencelistId);
+        PresenceList presenceList = presenceListService.refreshAndGetPresenceListByID(presencelistId);
         if (presenceList == null) {
             return ResponseEntity.badRequest().body(new ResponseDto("We couldn't find the present list", null));
         }
-
         return ResponseEntity.ok().body(new ResponseDto("Success", presenceList));
     }
 }

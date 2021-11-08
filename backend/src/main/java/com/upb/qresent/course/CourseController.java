@@ -1,6 +1,5 @@
 package com.upb.qresent.course;
 
-import com.upb.qresent.presentList.PresenceList;
 import com.upb.qresent.user.UserRepository;
 import com.upb.qresent.utils.ResponseDto;
 import org.bson.types.ObjectId;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "${frontend.domain}", maxAge = 3600, allowCredentials = "true")
