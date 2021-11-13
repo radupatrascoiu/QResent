@@ -13,47 +13,50 @@ import User from './user';
 import Logout from './logout';
 import { Link } from 'react-router-dom';
 import { Grid } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useKeycloak } from '@react-keycloak/web';
 import '../App.css';
 
 
-class Navbar extends Component {
-    render() {
-        return (
-            <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <Grid className="leftGrid" container 
-                        >
-                            <Grid item>
-                                <Typography type="title" variant="h6" component="div">
-                                    QResent
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="h7" component="div">
-                                    <Button color="inherit">
-                                        <Link to="/">Home</Link>
-                                    </Button>
+function Navbar() {
+    const { initialized, keycloak } = useKeycloak();
+
+    return (
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar>
+                    <Grid className="leftGrid" container>
+                        <Grid item>
+                            <Typography type="title" variant="h6" component="div">
+                                QResent
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="h7" component="div">
+                                <Button color="inherit">
+                                    <Link to="/">Home</Link>
+                                </Button>
+                                {initialized && keycloak?.authenticated &&
                                     <Button color="inherit">
                                         <Link to="/courses">Courses</Link>
                                     </Button>
-                                </Typography>
-                            </Grid>
+                                }
+                            </Typography>
                         </Grid>
+                    </Grid>
 
-                        <Grid className="rightGrid">
-                            {this.props.initialized && this.props.keycloak?.authenticated ?
-                                <div style={{ display: 'inline-block' }}>
-                                    <User keycloak={this.props.keycloak} />
-                                    <Logout keycloak={this.props.keycloak} />
-                                </div> : <LoginPage></LoginPage>
-                            }
-                        </Grid>
-                    </Toolbar>
-                </AppBar>
-            </Box>
-        );
-    }
+                    <Grid className="rightGrid">
+                        {initialized && keycloak?.authenticated ?
+                            <div style={{ display: 'inline-block' }}>
+                                <Button color="inherit"><a href="https://moviark.com/auth/realms/QResent2.0/account/">Account</a></Button>
+                                <User keycloak={keycloak} />
+                                <Logout keycloak={keycloak} />
+                            </div> : <LoginPage></LoginPage>
+                        }
+                    </Grid>
+                </Toolbar>
+            </AppBar>
+        </Box>
+    );
 }
-
-export default withHooksKC(Navbar);
+export default Navbar;

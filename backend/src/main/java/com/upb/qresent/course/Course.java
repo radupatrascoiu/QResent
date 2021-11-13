@@ -20,15 +20,17 @@ public class Course {
     private String infos;
     private String requirements;
     private String bonuses;
+    private short credits;
     private Set<String> schedule;
 
-    public Course(String name, ObjectId professorId, String infos, String requirements, String bonuses, Set<String> schedule) {
+    public Course(String name, ObjectId professorId, short credits, String infos, String requirements, String bonuses, Set<String> schedule) {
         this.name = name;
         this.professorId = professorId;
         this.infos = infos;
         this.requirements = requirements;
         this.bonuses = bonuses;
         this.schedule = schedule;
+        this.credits = credits;
     }
 
 

@@ -20,7 +20,7 @@ const LoginPage = () => {
     if (keycloak?.authenticated)
         return <Redirect to={currentLocationState?.from} />
 
-    return (<Button color="inherit" onClick={login}>Login</Button>)
+    return (<Button color="inherit" onClick={login}>Sign In</Button>)
 }
 
 export default LoginPage
