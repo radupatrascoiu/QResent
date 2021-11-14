@@ -12,6 +12,7 @@ import NotFound from './components/notfound';
 import ValidateQR from './services/validateQR';
 import Courses from './components/courses';
 import Statistics from './components/statistics';
+import CourseOptions from './components/courseOptions';
 
 class App extends Component {
   render() {
@@ -28,6 +29,7 @@ class App extends Component {
               <Route path="/validate/:courseID/:presenceListID/:qrcodeID" component={ValidateQR} />
               <Route path="/secured" component={Student} />
               <Route exact path="/courses" component={Courses} />
+              <Route exact path="/create/course" component={CourseOptions} />
               <Route path="*"><NotFound /></Route>
             </Switch>
           </div>
