@@ -2,7 +2,7 @@ import axios from 'axios';
 import { config } from '../constants';
 
 export const userApi = {
-    getStudent, getCourse, getUsers, getCourses
+    getStudent, getCourse, getUsers, getCourses, studentCourseRoll
 }
 
 function getStudent(token) {
@@ -19,6 +19,15 @@ function getCourses(token) {
             'Authorization': bearerAuth(token)
         }
     })
+}
+
+function studentCourseRoll(token, course) {
+    return instance.put(`/api/courses/enroll`,
+        { courseId: course }, {
+            headers: {
+                'Authorization': bearerAuth(token)
+            }
+        })
 }
 
 function getUsers(token) {
@@ -45,8 +54,8 @@ const instance = axios.create({
 
 instance.interceptors.response.use(response => {
     return response;
-}, function(error) {
-    if(error.response.status === 404) {
+}, function (error) {
+    if (error.response.status === 404) {
         return { stauts: error.response.status };
     }
     return Promise.reject(error.response);
