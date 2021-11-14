@@ -16,19 +16,19 @@ import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useKeycloak } from '@react-keycloak/web';
 import '../App.css';
-
+import img from "../img/logoQR2.png"
 
 function Navbar() {
     const { initialized, keycloak } = useKeycloak();
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" style={{background: "Black" }}>
                 <Toolbar>
                     <Grid className="leftGrid" container>
                         <Grid item>
                             <Typography type="title" variant="h6" component="div">
-                                QResent
+                                    <img className="img" src={img}/>
                             </Typography>
                         </Grid>
                         <Grid item>
@@ -44,7 +44,6 @@ function Navbar() {
                             </Typography>
                         </Grid>
                     </Grid>
-
                     <Grid className="rightGrid">
                         {initialized && keycloak?.authenticated ?
                             <div style={{ display: 'inline-block' }}>
