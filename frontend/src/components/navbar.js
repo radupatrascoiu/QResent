@@ -14,27 +14,26 @@ import Logout from './logout';
 import { Link } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import '../App.css';
-
+import img from "../img/logoQR2.png"
 
 class Navbar extends Component {
     render() {
         return (
             <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
+                <AppBar position="static"  style={{background: "Black" }} >
                     <Toolbar>
-                        <Grid className="leftGrid" container 
-                        >
-                            <Grid item>
-                                <Typography type="title" variant="h6" component="div">
-                                    QResent
+                        <Grid className="leftGrid" container>
+                            <Grid item >
+                                <Typography type="title" component="div">
+                                    <img className="img" src={img}/>
                                 </Typography>
                             </Grid>
-                            <Grid item>
+                            <Grid item >
                                 <Typography variant="h7" component="div">
-                                    <Button color="inherit">
+                                    <Button color="inherit" variant="h7">
                                         <Link to="/">Home</Link>
                                     </Button>
-                                    <Button color="inherit">
+                                    <Button color="inherit" variant="h7">
                                         <Link to="/courses">Courses</Link>
                                     </Button>
                                 </Typography>
@@ -43,7 +42,7 @@ class Navbar extends Component {
 
                         <Grid className="rightGrid">
                             {this.props.initialized && this.props.keycloak?.authenticated ?
-                                <div style={{ display: 'inline-block' }}>
+                                <div style={{ display: 'inline-block' }} variant="h7">
                                     <User keycloak={this.props.keycloak} />
                                     <Logout keycloak={this.props.keycloak} />
                                 </div> : <LoginPage></LoginPage>
