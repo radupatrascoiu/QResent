@@ -28,6 +28,7 @@ public class UserFilter implements Filter {
         var request = (HttpServletRequest) servletRequest;
         var response = (HttpServletResponse) servletResponse;
         KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) request.getUserPrincipal();
+        System.out.println(token);
         KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
         if (principal != null && userRepository.findByLdapId(principal.getName()) == null) {
             KeycloakSecurityContext session = principal.getKeycloakSecurityContext();

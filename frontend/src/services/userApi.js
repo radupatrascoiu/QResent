@@ -2,7 +2,7 @@ import axios from 'axios';
 import { config } from '../constants';
 
 export const userApi = {
-    getStudent, getCourse, getUsers, getCourses, studentCourseRoll
+    getStudent, getCourse, getUsers, getCourses, studentCourseRoll, generatePresenceList, getPresenceList, recordQR
 }
 
 function getStudent(token) {
@@ -39,13 +39,36 @@ function getUsers(token) {
 }
 
 function getCourse(token, courseID) {
-    return instance.get(`/api/course/${courseID}`, {
+    return instance.get(`/api/courses/${courseID}`, {
         headers: {
             'Authorization': bearerAuth(token)
         }
     })
 }
 
+function generatePresenceList(token, courseID) {
+    return instance.post(`/api/presencelist/${courseID}`, "", {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
+
+function getPresenceList(token, presenceListID) {
+    return instance.get(`/api/presencelist/${presenceListID}`, {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
+
+function recordQR(token, courseId, presenceListID, qrID) {
+    return instance.post(`/api/qr/record/${courseId}/${presenceListID}/${qrID}`, "", {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
 
 
 const instance = axios.create({
