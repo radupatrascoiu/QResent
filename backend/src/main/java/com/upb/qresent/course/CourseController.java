@@ -4,6 +4,7 @@ import com.upb.qresent.user.User;
 import com.upb.qresent.user.UserRepository;
 import com.upb.qresent.user.UserService;
 import com.upb.qresent.utils.ResponseDto;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +32,16 @@ public class CourseController {
         this.userRepository = userRepository;
         this.userService = userService;
         this.courseService = courseService;
+    }
+
+    @GetMapping("/{courseId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getCourse(@PathVariable(value="courseId") ObjectId courseId) {
+        var course = courseService.getCourseByID(courseId);
+        if (course != null) {
+            return ResponseEntity.ok(new ResponseDto("Success", course));
+        }
+        return ResponseEntity.badRequest().body(new ResponseDto("This course does not exists.", false));
     }
 
     @PutMapping("/enroll")
