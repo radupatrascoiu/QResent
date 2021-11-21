@@ -32,8 +32,8 @@ public class Util {
         qrCodeRepository.deleteAll();
 
         // Insert 2 courses
-        Course course1 = courseRepository.save(new Course("UBD", null, "Cancer", "Sa ridici mana", "Nu exista", Set.of("Luni: 10-12", "Vineri: 18-20")));
-        Course course2 = courseRepository.save(new Course("PP", null, "Greu rau", "Sa rupi", "Sanki", Set.of("Luni: 12-14", "Joi: 18-20")));
+        Course course1 = courseRepository.save(new Course("UBD", null, (short) 3, "Cancer", "Sa ridici mana", "Nu exista", Set.of("Luni: 10-12", "Vineri: 18-20")));
+        Course course2 = courseRepository.save(new Course("PP", null, (short) 6, "Greu rau", "Sa rupi", "Sanki", Set.of("Luni: 12-14", "Joi: 18-20")));
 
         // Create and set professor for the first course
         User professor1 = userRepository.findByLdapId("boicea.alexandru@stud.com");

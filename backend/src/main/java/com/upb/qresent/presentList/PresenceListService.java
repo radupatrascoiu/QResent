@@ -49,6 +49,7 @@ public class PresenceListService {
         QRCode newQR = new QRCode(presenceList.getId());
         newQR = qrCodeRepository.save(newQR);
         presenceList.setQrId(newQR.getId());
+        System.out.println("updated");
         return presenceListRepository.save(presenceList);
     }
 
@@ -57,6 +58,7 @@ public class PresenceListService {
         if (presenceList == null) return null;
         Date now = Date.from(Instant.now());
 
+
         // generate a new QR if the previous one expired, but presence list didn't
         if (!now.after(presenceList.getTimestampClosed())) {
             ObjectId qrID = presenceList.getQrId();
@@ -64,10 +66,13 @@ public class PresenceListService {
 
             QRCode qr = qrCodeRepository.findById(qrIDString).orElse(null);
             if (qr == null) return null;
+            System.out.println(now);
+            System.out.println(qr.getTimestampExpires());
 
             if (now.after(qr.getTimestampExpires())) {
                 presenceList = this.updateQR(presenceList);
             }
+            System.out.println(presenceList);
         }
         return presenceList;
     }

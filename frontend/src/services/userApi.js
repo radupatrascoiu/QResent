@@ -2,7 +2,7 @@ import axios from 'axios';
 import { config } from '../constants';
 
 export const userApi = {
-    getStudent, getCourse, getUsers, getCourses
+    getStudent, getCourse, getUsers, getCourses, studentCourseRoll, generatePresenceList, getPresenceList, recordQR
 }
 
 function getStudent(token) {
@@ -21,6 +21,15 @@ function getCourses(token) {
     })
 }
 
+function studentCourseRoll(token, course) {
+    return instance.put(`/api/courses/enroll`,
+        { courseId: course }, {
+            headers: {
+                'Authorization': bearerAuth(token)
+            }
+        })
+}
+
 function getUsers(token) {
     return instance.get(`/api/user/users/`, {
         headers: {
@@ -30,13 +39,36 @@ function getUsers(token) {
 }
 
 function getCourse(token, courseID) {
-    return instance.get(`/api/course/${courseID}`, {
+    return instance.get(`/api/courses/${courseID}`, {
         headers: {
             'Authorization': bearerAuth(token)
         }
     })
 }
 
+function generatePresenceList(token, courseID) {
+    return instance.post(`/api/presencelist/${courseID}`, "", {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
+
+function getPresenceList(token, presenceListID) {
+    return instance.get(`/api/presencelist/${presenceListID}`, {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
+
+function recordQR(token, courseId, presenceListID, qrID) {
+    return instance.post(`/api/qr/record/${courseId}/${presenceListID}/${qrID}`, "", {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
 
 
 const instance = axios.create({
@@ -45,8 +77,8 @@ const instance = axios.create({
 
 instance.interceptors.response.use(response => {
     return response;
-}, function(error) {
-    if(error.response.status === 404) {
+}, function (error) {
+    if (error.response.status === 404) {
         return { stauts: error.response.status };
     }
     return Promise.reject(error.response);

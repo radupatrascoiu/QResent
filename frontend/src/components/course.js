@@ -20,39 +20,34 @@ const Course = () => {
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
     const isRetina = useMediaQuery({ query: '(min-resolution: 2dppx)' })
     
-    const [course, setCourse] = useState({
-        "id": "1231rd1d2",
-        "name": "UBD",
-        "professor": "1231411224",
-        "information": "Aici se trece",
-        "requirements": "Sa nu faci ce face Radu Patrascoiu cu regele Boicea Alexandru.",
-        "bonuses": "Mai vrei si bonus ?",
-        "schedule": ["Luni, 10:00-12:00", "Marti, 16:00-18:00", "Miercuri, 10:00-12:00", "Joi, 12:00-14:00" ]
-    })
+    const [course, setCourse] = useState(null)
     const { initialized, keycloak } = useKeycloak();
 
-    // TODO Load data on mount 
-    // useEffect(async () => {
-    //     if (keycloak && initialized) {
-    //         console.log(keycloak.token)
-    //         try {
-    //             const response = await userApi.getCourse(keycloak.token, courseID);
-    //             setCourse(response.data)
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    // }, [initialized, keycloak]);
+    // Load data on mount 
+    useEffect(async () => {
+        if (keycloak && initialized) {
+            try {
+                const response = await userApi.getCourse(keycloak.token, courseID);
+                setCourse(response.data["data"])
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }, [initialized, keycloak]);
 
     const generatePresenceList = async () => {
-        // TODO
-        //  make req to generate the presence list
-        const presenceList = {
-            "id": "2131r1i2j12"
+        if (keycloak && initialized && course != null) {
+            try {
+                const response = await userApi.generatePresenceList(keycloak.token, courseID);
+                const presenceListId = response.data["data"]
+                console.log(`Presence list ${presenceListId} generated.`)
+
+                // redirect to presence list page
+                history.push(`/course/${courseID}/presencelist/${presenceListId}`);
+            } catch (error) {
+                console.log(error);
+            }
         }
-        
-        //  redirect to pressence list page
-        history.push(`/course/${courseID}/presencelist/${presenceList.id}`);
     }
 
     const exportPresenceList = async () => {
