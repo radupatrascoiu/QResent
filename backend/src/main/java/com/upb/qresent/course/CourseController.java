@@ -38,10 +38,11 @@ public class CourseController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getCourse(@PathVariable(value="courseId") ObjectId courseId) {
         var course = courseService.getCourseByID(courseId);
-        if (course != null) {
-            return ResponseEntity.ok(new ResponseDto("Success", course));
+        if (course == null) {
+            return ResponseEntity.badRequest().body(new ResponseDto("This course does not exists.", false));
         }
-        return ResponseEntity.badRequest().body(new ResponseDto("This course does not exists.", false));
+        Object courseProjection = courseService.getCourseProjection(course);
+        return ResponseEntity.ok(new ResponseDto("Success", courseProjection));
     }
 
     @PutMapping("/enroll")

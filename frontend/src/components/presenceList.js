@@ -3,6 +3,8 @@ import { useParams } from "react-router";
 import { useEffect, useState } from 'react';
 import { config } from '../constants';
 import { useKeycloak } from '@react-keycloak/web';
+import { Button } from '@mui/material';
+import { PresenceListExporter } from './presenceListExporter';
 import { userApi } from '../services/userApi';
 
 
@@ -13,14 +15,13 @@ const PresenceList = () => {
     const [isActive, setIsActive] = useState(true)
     const [intervalHandler, setIntervalHandler] = useState(null)
     const { QR_EXPIRATION_TIME, PRESENCELIST_EXPIRATION_TIME, QR_FETCH_INTERVAL, FRONTEND_URL } = config
-
-
+    
     // get the QR code and set it
     const fetchQR = async () => {        
         if (keycloak && initialized) {
             try {
                 const response = await userApi.getPresenceList(keycloak.token, presenceListID);
-                setPresenceList(response.data["data"])
+                setPresenceList(await response.data["data"])
                 if (response.data != null && new Date() > new Date(response.data["data"]["timestampClosed"]))  setIsActive(false)
             } catch (error) {
                 console.log(error);
@@ -53,13 +54,13 @@ const PresenceList = () => {
         <div className="presenceListContainer">
             <br/>
             <div className="qrContainer">
-                {presenceList && isActive && QRTool.generateQR(`${FRONTEND_URL}/validate/${courseID}/${presenceListID}/${presenceList["qrId"]}`) }
-                {!isActive && <h1> You no loger can scan QR codes. </h1> }
-                {presenceList && isActive && `${FRONTEND_URL}/validate/${courseID}/${presenceListID}/${presenceList["qrId"]}` }
+                {presenceList && isActive && `${FRONTEND_URL}/validate/${courseID}/${presenceListID}/${presenceList["qrId"]}` }<br/><br/>
+                {presenceList && isActive && QRTool.generateQR(`${FRONTEND_URL}/validate/${courseID}/${presenceListID}/${presenceList["qrId"]}`, {
+                    "size": 350,
+                })}
+                {!isActive && <h1> You no loger can scan QR codes. </h1> }<br/><br/>
             </div>
-            <div className="attendeesTable">
-                {/* face requesturi periodice sa ceara tabelul */}
-            </div>
+            <PresenceListExporter presenceListID={presenceListID}/>
         </div>
     );
 }
