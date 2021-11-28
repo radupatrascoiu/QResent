@@ -28,11 +28,16 @@ const CourseOptions = () => {
         if (isSending) return
         setIsSending(true);
 
-        const response = await userApi.adminCourseCreate(keycloak?.token, courseName, professorMail);
-        if (response?.status === 200) {
-            setIsSending(false);
-            setSuccess(true);
-        } else {
+        try {
+            const response = await userApi.adminCourseCreate(keycloak?.token, courseName, professorMail);
+            if (response?.status === 200) {
+                setIsSending(false);
+                setSuccess(true);
+            } else {
+                setError(true);
+                setIsSending(false);
+            }
+        } catch (e) {
             setError(true);
             setIsSending(false);
         }
