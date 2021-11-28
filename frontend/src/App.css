@@ -48,15 +48,15 @@
 }
 
 a {
-  color: #FFF;
+  color: rgb(250, 249, 249);
   text-decoration: none;
 }
 a:hover {
-   color: #FFF
+   color: rgb(13, 86, 134)
 }
 
 body {
-  background-image:  url("./img/bck.png");
+  background-color: 'white';
   background-position: 'center';
   background-size: 'cover';
   background-repeat: 'no-repeat';
@@ -66,5 +66,16 @@ body {
 
 .container {
   background: rgba(103, 103, 126, 0);
+ 
 }
 
+
+.text{
+  display: inline;
+  width: 100%;
+}
+  
+.read-or-hide{
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
