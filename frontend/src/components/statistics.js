@@ -5,7 +5,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import { Button } from '@mui/material';
 import { PresenceListExporter } from './presenceListExporter';
 import { userApi } from '../services/userApi';
-import { Doughnut } from 'react-chartjs-2';
+// import { Doughnut } from 'react-chartjs-2';
 
 const Statistics = () => {
     const { initialized, keycloak } = useKeycloak();
