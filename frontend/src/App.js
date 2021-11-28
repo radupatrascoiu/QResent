@@ -13,6 +13,7 @@ import ValidateQR from './services/validateQR';
 import Courses from './components/courses';
 import Statistics from './components/statistics';
 import CourseOptions from './components/courseOptions';
+import CourseEdit from './components/courseEdit';
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/course/:courseID" component={Course} />
+              <Route exact path="/course/:courseID/edit" component={CourseEdit} />
               <Route path="/course/:courseID/presencelist/:presenceListID" component={presenceList} />
               <Route path="/statistics/:courseID/:courseNo" component={Statistics} />
               <Route path="/validate/:courseID/:presenceListID/:qrcodeID" component={ValidateQR} />

@@ -24,14 +24,13 @@ const Courses = () => {
             try {
                 const response = await userApi.getCourses(keycloak?.token);
                 setCourses(response.data);
-                console.log(response.data);
             } catch (error) {
                 setError(true);
             }
         }
     }, [keycloak, initialized])
 
-    return (<Container maxWidth="lg">
+    return (initialized && <Container maxWidth="lg">
         {courses &&
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 250 }} aria-label="simple table">
@@ -44,7 +43,7 @@ const Courses = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {courses.map((course, idx) => (
+                        {courses.map((course, idx) => (                            
                             <TableRow
                                 key={idx}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -63,7 +62,7 @@ const Courses = () => {
                                     {course.credits}
                                 </TableCell>
                                 <TableCell align="right">
-                                    <CourseButton courseId={course.courseId} enrolled={course.enrolled} ></CourseButton>
+                                    <CourseButton courseId={course.courseId} enrolled={course.enrolled} professorMail={course?.professor?.ldapId} ></CourseButton>
                                 </TableCell>
                             </TableRow>
                         ))}

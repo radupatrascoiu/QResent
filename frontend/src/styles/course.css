@@ -4,3 +4,7 @@
     margin-right: auto;
     margin-top: 10vh;
 }
+
+.sizedText {
+    word-break: break-all;
+}

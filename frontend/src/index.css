@@ -23,3 +23,7 @@ code {
   height:auto;
   width:80px;
 }
+
+a:hover {
+  color: rgb(219 219 219)!important;
+}
