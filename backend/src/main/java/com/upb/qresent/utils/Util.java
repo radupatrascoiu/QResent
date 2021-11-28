@@ -10,6 +10,7 @@ import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Set;
@@ -50,7 +51,7 @@ public class Util {
         }
         course2.setProfessorId(professor2.getId());
         courseRepository.save(course2);
-        
+
         // Enroll student to the first course
         User student = userRepository.findByLdapId("patrionpatrick@gmail.com");
         if (student != null) {
