@@ -114,11 +114,11 @@ const Course = () => {
                                 <TableBody>
                                         <TableRow key={course.id + "professor"}>
                                             <TableCell>Professor 🙍</TableCell>
-                                            <TableCell align="center">{course.professor.name}</TableCell>
+                                            <TableCell align="center">{course?.professor?.name}</TableCell>
                                         </TableRow>
                                         <TableRow key={course.id + "credits"}>
                                             <TableCell>Credits 💰</TableCell>
-                                            <TableCell align="center">{course.credits}</TableCell>
+                                            <TableCell align="center">{course?.credits}</TableCell>
                                         </TableRow>
                                         <TableRow key={course.id + "infos"}>
                                             <TableCell>Infos ℹ️</TableCell>
@@ -132,7 +132,7 @@ const Course = () => {
                                                         <Typography sx={{ mx: "auto", opacity: "40%" }} fontSize="15px"> -&nbsp;-&nbsp;-&nbsp;-&nbsp;- &nbsp; reveal &nbsp; -&nbsp;-&nbsp;-&nbsp;-&nbsp;-</Typography>
                                                     </AccordionSummary>
                                                     <AccordionDetails>
-                                                        <Typography fontSize="13px">{course.infos}</Typography>
+                                                        <Typography fontSize="13px">{course?.infos}</Typography>
                                                     </AccordionDetails>
                                                 </Accordion>
                                             </TableCell>
@@ -149,7 +149,7 @@ const Course = () => {
                                                         <Typography sx={{ mx: "auto", opacity: "40%" }} fontSize="15px"> -&nbsp;-&nbsp;-&nbsp;-&nbsp;- &nbsp; reveal &nbsp; -&nbsp;-&nbsp;-&nbsp;-&nbsp;-</Typography>
                                                     </AccordionSummary>
                                                     <AccordionDetails>
-                                                        <Typography fontSize="13px">{course.requirements}</Typography>
+                                                        <Typography fontSize="13px">{course?.requirements}</Typography>
                                                     </AccordionDetails>
                                                 </Accordion>
                                             </TableCell>
@@ -166,7 +166,7 @@ const Course = () => {
                                                         <Typography sx={{ mx: "auto", opacity: "40%" }} fontSize="15px"> -&nbsp;-&nbsp;-&nbsp;-&nbsp;- &nbsp; reveal &nbsp; -&nbsp;-&nbsp;-&nbsp;-&nbsp;-</Typography>
                                                     </AccordionSummary>
                                                     <AccordionDetails>
-                                                        <Typography fontSize="13px">{course.bonuses}</Typography>
+                                                        <Typography fontSize="13px">{course?.bonuses}</Typography>
                                                     </AccordionDetails>
                                                 </Accordion>
                                             </TableCell>
@@ -183,7 +183,7 @@ const Course = () => {
                                                         <Typography sx={{ mx: "auto", opacity: "40%" }} fontSize="15px"> -&nbsp;-&nbsp;-&nbsp;-&nbsp;- &nbsp; reveal &nbsp; -&nbsp;-&nbsp;-&nbsp;-&nbsp;-</Typography>
                                                     </AccordionSummary>
                                                     <AccordionDetails>
-                                                        {course.schedule.map((availableTime) => (<div><Typography fontSize="13px">{availableTime}</Typography><br/></div>))}
+                                                        {course?.schedule?.map((availableTime) => (<div><Typography fontSize="13px">{availableTime}</Typography><br/></div>))}
                                                     </AccordionDetails>
                                                 </Accordion>
                                             </TableCell>

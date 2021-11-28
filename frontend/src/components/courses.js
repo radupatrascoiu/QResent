@@ -11,15 +11,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CourseButton from "./courseButton";
 import { Container } from '@mui/material';
-
-
-
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 const Courses = () => {
     const { initialized, keycloak } = useKeycloak();
     const [courses, setCourses] = useState(null);
     const [error, setError] = useState(false);
-    const [updated, setUpdated] = useState(0);
 
     useEffect(async () => {
         if (keycloak && initialized) {
@@ -52,7 +50,11 @@ const Courses = () => {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {course.name}
+                                    <Link to={"/course/" + course.courseId}>
+                                        <Button variant="contained" color="info">
+                                            {course.name}
+                                        </Button>
+                                    </Link>
                                 </TableCell>
                                 <TableCell align="right">
                                     {course.professor?.name}

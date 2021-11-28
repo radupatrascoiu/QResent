@@ -56,6 +56,22 @@ public class CourseController {
         return ResponseEntity.badRequest().body(new ResponseDto("Bad request", false));
     }
 
+    @PutMapping("/create")
+    @PreAuthorize("hasRole('admin')")
+    public ResponseEntity<?> createCourse(@RequestBody CourseCreateRequest createRequest,
+                                           HttpServletRequest request) {
+        var professor = userRepository.findByLdapId(createRequest.getProfessorMail());
+        if (professor != null) {
+            if (professor.getRole().contains("professor")) {
+                Course course = new Course();
+                course.setName(createRequest.getCourseName());
+                course.setProfessorId(professor.getId());
+                return ResponseEntity.ok(new ResponseDto("Success", courseRepository.save(course)));
+            }
+        }
+        return ResponseEntity.badRequest().body(new ResponseDto("Bad request", false));
+    }
+
     @GetMapping()
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getCoursesList(HttpServletRequest request) {

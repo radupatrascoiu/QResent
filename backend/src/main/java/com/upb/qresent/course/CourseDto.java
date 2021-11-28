@@ -1,11 +1,8 @@
 package com.upb.qresent.course;
 
 import com.upb.qresent.user.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.types.ObjectId;
-
 import java.util.Set;
 
 @Getter
