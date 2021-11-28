@@ -33,6 +33,9 @@ public class Course {
         this.credits = credits;
     }
 
+    public Course() {
+
+    }
 
 
     public boolean insertIntervalIntoSchedule(String interval) {

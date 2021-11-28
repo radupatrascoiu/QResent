@@ -27,6 +27,12 @@ public class Util {
     private QRCodeRepository qrCodeRepository;
 
     public void insertFakeDataInDB() {
+        var initialized = courseRepository.findByName("UBD") != null;
+
+        if (initialized) {
+            return;
+        }
+
         // Clear the db
         courseRepository.deleteAll();
         presenceListRepository.deleteAll();
