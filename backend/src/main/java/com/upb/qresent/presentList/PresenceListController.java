@@ -1,17 +1,11 @@
 package com.upb.qresent.presentList;
 
 import com.upb.qresent.course.CourseRepository;
-import com.upb.qresent.user.User;
 import com.upb.qresent.utils.ResponseDto;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowCredentials = "true")
