@@ -82,6 +82,10 @@ public class PresenceListService {
         return presenceListRepository.findById(presencelistId.toString()).orElse(null);
     }
 
+    public List<PresenceList> getPresenceListsByCourse(ObjectId courseId) {
+        return presenceListRepository.findByCourseId(courseId);
+    }
+
     public Map<String, Object> getPresenceListProjection(PresenceList presenceList) {
         List<User> students = new ArrayList<>();
         for (ObjectId studentID : presenceList.getStudents()) {

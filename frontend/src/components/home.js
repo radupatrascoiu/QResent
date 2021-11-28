@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withHooksKC } from '../utils/withHooksKC';
 import '../utils/QRTool';
-import Card from 'react-bootstrap/Card'
+import {Card} from 'reactstrap';
 import img from "../img/acs_mobi.png";
 import img2 from "../img/sigla_mps.png";
 import logoQR from "../img/logoQR2.png";

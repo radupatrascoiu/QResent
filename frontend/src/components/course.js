@@ -5,7 +5,7 @@ import { userApi } from '../services/userApi';
 import { useKeycloak } from '@react-keycloak/web';
 import { useHistory } from "react-router-dom";
 
-import {Button} from "@mui/material"
+import {Alert, Button} from "@mui/material"
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -23,14 +23,40 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import '../styles/course.css'
 
 
 const Course = () => {
     const {courseID} = useParams()
+    const [courseNo, setCourseNo] = useState(null)
     const history = useHistory()
     const [course, setCourse] = useState(null)
     const { initialized, keycloak } = useKeycloak();
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const goToStatistics = () => {
+        setOpen(false);
+        if (courseNo > 0 && courseNo < 15) {
+            history.push(`/statistics/${courseID}/${courseNo}`);
+        } else {
+            alert("Please provide a number between 1 and 14.")
+        }
+    }
 
     // Load data on mount 
     useEffect(async () => {
@@ -62,6 +88,20 @@ const Course = () => {
         }
     }
 
+    const generateStatistics = async () => {
+        if (keycloak && initialized && course != null) {
+            try {
+                const response = await userApi.generateStatistics(keycloak.token, courseID, courseNo);
+                const statisticsId = response.data["statistics"]
+                console.log(`Statistics ${statisticsId} generated.`)
+
+                // redirect to statistics page
+                history.push(`/course/${courseID}/statistics/${statisticsId}`);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
 
     return (
         <div className="courseContainer">
@@ -154,8 +194,34 @@ const Course = () => {
                     </CardContent>
                     <CardActions sx={{ my: "20px" }}>
                         <Button variant="outlined" sx={{ mx: "auto", marginBottom: "10px" }} onClick={generatePresenceList}>Generate a presence list</Button> <br/>
+                        <Button variant="outlined" sx={{ mx: "auto", marginBottom: "10px" }} onClick={handleClickOpen}>Generate statistics</Button> <br/>
                     </CardActions>
                 </Card>
+            }
+            {course && <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle>Generate Statistics</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText>
+                    Please provide the number of the week for which you want statistcs.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Course Number"
+                        type="number"
+                        fullWidth
+                        variant="standard"
+                        onChange={(e) => {
+                            setCourseNo(e.target.value)
+                        }}
+                    />
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={goToStatistics}>Submit</Button>
+                    </DialogActions>
+                </Dialog>
             }
         </div>
     );
