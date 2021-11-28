@@ -66,7 +66,7 @@ function generatePresenceList(token, courseID) {
 }
 
 function generateStatistics(token, courseId, courseNo) {
-    return instance.get(`/api/statistics/${courseId}/${courseNo}`, "", {
+    return instance.get(`/api/statistics/${courseId}/${courseNo}`, {
         headers: {
             'Authorization': bearerAuth(token)
         }
