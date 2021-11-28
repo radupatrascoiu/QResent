@@ -5,7 +5,7 @@ import { userApi } from '../services/userApi';
 import { useKeycloak } from '@react-keycloak/web';
 import { useHistory } from "react-router-dom";
 
-import {Alert, Button} from "@mui/material"
+import { Alert, Button } from "@mui/material"
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -34,7 +34,7 @@ import '../styles/course.css'
 
 
 const Course = () => {
-    const {courseID} = useParams()
+    const { courseID } = useParams()
     const [courseNo, setCourseNo] = useState(null)
     const history = useHistory()
     const [course, setCourse] = useState(null)
@@ -108,101 +108,58 @@ const Course = () => {
             {course &&
                 <Card sx={{ maxWidth: "100%" }}>
                     <CardContent>
-                        <Typography  sx={{ my: "20px" }} gutterBottom variant="h5" component="div">{course.name}</Typography>
+                        <Typography sx={{ my: "20px" }} gutterBottom variant="h5" component="div">{course.name}</Typography>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: "50%" }} aria-label="spanning table">
                                 <TableBody>
-                                        <TableRow key={course.id + "professor"}>
-                                            <TableCell>Professor 🙍</TableCell>
-                                            <TableCell align="center">{course?.professor?.name}</TableCell>
-                                        </TableRow>
-                                        <TableRow key={course.id + "credits"}>
-                                            <TableCell>Credits 💰</TableCell>
-                                            <TableCell align="center">{course?.credits}</TableCell>
-                                        </TableRow>
-                                        <TableRow key={course.id + "infos"}>
-                                            <TableCell>Infos ℹ️</TableCell>
-                                            <TableCell align="Left"  sx={{ width: "50%" }}>
-                                                <Accordion>
-                                                    <AccordionSummary
-                                                    expandIcon={<ExpandMoreIcon />}
-                                                    aria-controls="panel1a-content"
-                                                    id="panel1a-header"
-                                                    >
-                                                        <Typography sx={{ mx: "auto", opacity: "40%" }} fontSize="15px"> -&nbsp;-&nbsp;-&nbsp;-&nbsp;- &nbsp; reveal &nbsp; -&nbsp;-&nbsp;-&nbsp;-&nbsp;-</Typography>
-                                                    </AccordionSummary>
-                                                    <AccordionDetails>
-                                                        <Typography fontSize="13px">{course?.infos}</Typography>
-                                                    </AccordionDetails>
-                                                </Accordion>
-                                            </TableCell>
-                                        </TableRow>
-                                        <TableRow key={course.id + "requirements"}>
-                                            <TableCell>Requirements ⚔️</TableCell>
-                                            <TableCell align="Left"  sx={{ width: "50%" }}>
-                                                <Accordion>
-                                                    <AccordionSummary
-                                                    expandIcon={<ExpandMoreIcon />}
-                                                    aria-controls="panel1a-content"
-                                                    id="panel1a-header"
-                                                    >
-                                                        <Typography sx={{ mx: "auto", opacity: "40%" }} fontSize="15px"> -&nbsp;-&nbsp;-&nbsp;-&nbsp;- &nbsp; reveal &nbsp; -&nbsp;-&nbsp;-&nbsp;-&nbsp;-</Typography>
-                                                    </AccordionSummary>
-                                                    <AccordionDetails>
-                                                        <Typography fontSize="13px">{course?.requirements}</Typography>
-                                                    </AccordionDetails>
-                                                </Accordion>
-                                            </TableCell>
-                                        </TableRow>
-                                        <TableRow key={course.id + "bonuses"}>
-                                            <TableCell>Bonuses 🏋️‍♀️</TableCell>
-                                            <TableCell align="Left"  sx={{ width: "50%" }}>
-                                                <Accordion>
-                                                    <AccordionSummary
-                                                    expandIcon={<ExpandMoreIcon />}
-                                                    aria-controls="panel1a-content"
-                                                    id="panel1a-header"
-                                                    >
-                                                        <Typography sx={{ mx: "auto", opacity: "40%" }} fontSize="15px"> -&nbsp;-&nbsp;-&nbsp;-&nbsp;- &nbsp; reveal &nbsp; -&nbsp;-&nbsp;-&nbsp;-&nbsp;-</Typography>
-                                                    </AccordionSummary>
-                                                    <AccordionDetails>
-                                                        <Typography fontSize="13px">{course?.bonuses}</Typography>
-                                                    </AccordionDetails>
-                                                </Accordion>
-                                            </TableCell>
-                                        </TableRow>
-                                        <TableRow key={course.id + "schedule"}>
-                                            <TableCell>Schedule 📅</TableCell>
-                                            <TableCell align="Left"  sx={{ width: "50%" }}>
-                                                <Accordion>
-                                                    <AccordionSummary
-                                                    expandIcon={<ExpandMoreIcon />}
-                                                    aria-controls="panel1a-content"
-                                                    id="panel1a-header"
-                                                    >
-                                                        <Typography sx={{ mx: "auto", opacity: "40%" }} fontSize="15px"> -&nbsp;-&nbsp;-&nbsp;-&nbsp;- &nbsp; reveal &nbsp; -&nbsp;-&nbsp;-&nbsp;-&nbsp;-</Typography>
-                                                    </AccordionSummary>
-                                                    <AccordionDetails>
-                                                        {course?.schedule?.map((availableTime) => (<div><Typography fontSize="13px">{availableTime}</Typography><br/></div>))}
-                                                    </AccordionDetails>
-                                                </Accordion>
-                                            </TableCell>
-                                        </TableRow>
+                                    <TableRow key={course.id + "professor"}>
+                                        <TableCell>Professor 🙍</TableCell>
+                                        <TableCell className="sizedText" align="center">{course?.professor?.name}</TableCell>
+                                    </TableRow>
+                                    <TableRow key={course.id + "credits"}>
+                                        <TableCell>Credits 💰</TableCell>
+                                        <TableCell className="sizedText" align="center">{course?.credits}</TableCell>
+                                    </TableRow>
+                                    <TableRow key={course.id + "infos"}>
+                                        <TableCell>Infos ℹ️</TableCell>
+                                        <TableCell align="center" sx={{ width: "50%" }}>
+                                        <Typography className="sizedText" fontSize="13px">{course?.infos}</Typography>
+
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow key={course.id + "requirements"}>
+                                        <TableCell>Requirements ⚔️</TableCell>
+                                        <TableCell align="center" sx={{ width: "50%" }}>
+                                            <Typography className="sizedText" fontSize="13px">{course?.requirements}</Typography>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow key={course.id + "bonuses"}>
+                                        <TableCell>Bonuses 🏋️‍♀️</TableCell>
+                                        <TableCell align="center" sx={{ width: "50%" }}>
+                                            <Typography className="sizedText" fontSize="13px">{course?.bonuses}</Typography>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow key={course.id + "schedule"}>
+                                        <TableCell>Schedule 📅</TableCell>
+                                        <TableCell align="center" sx={{ width: "50%" }}>
+                                            <div><Typography className="sizedText" fontSize="13px">{course?.schedule}</Typography><br /></div>
+                                        </TableCell>
+                                    </TableRow>
                                 </TableBody>
                             </Table>
                         </TableContainer>
                     </CardContent>
                     <CardActions sx={{ my: "20px" }}>
-                        <Button variant="outlined" sx={{ mx: "auto", marginBottom: "10px" }} onClick={generatePresenceList}>Generate a presence list</Button> <br/>
-                        <Button variant="outlined" sx={{ mx: "auto", marginBottom: "10px" }} onClick={handleClickOpen}>Generate statistics</Button> <br/>
+                        <Button variant="outlined" sx={{ mx: "auto", marginBottom: "10px" }} onClick={generatePresenceList}>Generate a presence list</Button> <br />
+                        <Button variant="outlined" sx={{ mx: "auto", marginBottom: "10px" }} onClick={handleClickOpen}>Generate statistics</Button> <br />
                     </CardActions>
                 </Card>
             }
             {course && <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>Generate Statistics</DialogTitle>
-                    <DialogContent>
+                <DialogTitle>Generate Statistics</DialogTitle>
+                <DialogContent>
                     <DialogContentText>
-                    Please provide the number of the week for which you want statistcs.
+                        Please provide the number of the week for which you want statistcs.
                     </DialogContentText>
                     <TextField
                         autoFocus
@@ -216,15 +173,15 @@ const Course = () => {
                             setCourseNo(e.target.value)
                         }}
                     />
-                    </DialogContent>
-                    <DialogActions>
+                </DialogContent>
+                <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={goToStatistics}>Submit</Button>
-                    </DialogActions>
-                </Dialog>
+                </DialogActions>
+            </Dialog>
             }
         </div>
     );
 }
- 
+
 export default Course;

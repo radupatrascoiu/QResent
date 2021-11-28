@@ -2,7 +2,18 @@ import axios from 'axios';
 import { config } from '../constants';
 
 export const userApi = {
-    getStudent, getCourse, getUsers, getCourses, studentCourseRoll, generatePresenceList, getPresenceList, recordQR, exportPresenceList, generateStatistics, adminCourseCreate
+    getStudent,
+    getCourse,
+    getUsers,
+    getCourses,
+    studentCourseRoll,
+    generatePresenceList,
+    getPresenceList,
+    recordQR,
+    exportPresenceList,
+    generateStatistics,
+    adminCourseCreate,
+    editCourse
 }
 
 function getStudent(token) {
@@ -24,21 +35,39 @@ function getCourses(token) {
 function studentCourseRoll(token, course) {
     return instance.put(`/api/courses/enroll`,
         { courseId: course }, {
-            headers: {
-                'Authorization': bearerAuth(token)
-            }
-        })
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
 }
 
 function adminCourseCreate(token, courseName, professorMail) {
     return instance.put(`/api/courses/create`,
-        { courseName: courseName,
-          professorMail: professorMail
+        {
+            courseName: courseName,
+            professorMail: professorMail
         }, {
-            headers: {
-                'Authorization': bearerAuth(token)
-            }
-        })
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
+
+function editCourse(token, courseId, name, bonuses, infos, requirements, schedule, credits) {
+    return instance.put(`/api/courses/edit/`,
+        {
+            courseId: courseId,
+            name: name,
+            bonuses: bonuses,
+            infos: infos,
+            requirements: requirements,
+            schedule: schedule,
+            credits: credits
+        }, {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
 }
 
 function getUsers(token) {

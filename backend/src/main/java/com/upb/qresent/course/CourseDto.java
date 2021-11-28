@@ -15,7 +15,7 @@ public class CourseDto {
     private String requirements;
     private String bonuses;
     private short credits;
-    private Set<String> schedule;
+    private String schedule;
     private boolean isEnrolled;
 
     public CourseDto(Course course, boolean isEnrolled, User professor) {
