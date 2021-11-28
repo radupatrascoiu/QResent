@@ -4,6 +4,7 @@ import com.upb.qresent.course.Course;
 import com.upb.qresent.course.CourseRepository;
 import com.upb.qresent.presentList.PresenceList;
 import com.upb.qresent.presentList.PresenceListRepository;
+import com.upb.qresent.statistics.StatisticsRepository;
 import com.upb.qresent.user.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.util.Pair;
@@ -16,11 +17,13 @@ public class QRCodeService {
     public final QRCodeRepository qrCodeRepository;
     public final PresenceListRepository presenceListRepository;
     public final CourseRepository courseRepository;
+    public final StatisticsRepository statisticsRepository;
 
-    public QRCodeService(QRCodeRepository qrCodeRepository, PresenceListRepository presenceListRepository, CourseRepository courseRepository) {
+    public QRCodeService(QRCodeRepository qrCodeRepository, PresenceListRepository presenceListRepository, CourseRepository courseRepository, StatisticsRepository statisticsRepository) {
         this.qrCodeRepository = qrCodeRepository;
         this.presenceListRepository = presenceListRepository;
         this.courseRepository = courseRepository;
+        this.statisticsRepository = statisticsRepository;
     }
 
     public QRCode getQRByID(ObjectId qrID) {
