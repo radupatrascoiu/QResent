@@ -21,13 +21,13 @@ const CourseButton = (props) => {
             setIsCourseTitular(keycloak?.userInfo?.email === props.professorMail);
             setIsProfessor(AuthorizedFunction(keycloak, ['professor']));
         }
-    }, [])
+    }, [keycloak, initialized])
 
-    const sendRequest = useCallback(() => {
+    const sendRequest = useCallback(async () => {
         if (isSending) return
         setIsSending(true);
 
-        const response = userApi.studentCourseRoll(keycloak?.token, props.courseId);
+        const response = await userApi.studentCourseRoll(keycloak?.token, props.courseId);
         if (response?.status === 200) {
             setEnrolled(!enrolled);
             setIsSending(false);
