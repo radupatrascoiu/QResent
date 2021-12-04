@@ -77,26 +77,11 @@ const Course = () => {
         if (keycloak && initialized && course != null) {
             try {
                 const response = await userApi.generatePresenceList(keycloak.token, courseID);
-                const presenceListId = response.data["statisticsId"]
+                const presenceListId = response.data["data"]
                 console.log(`Presence list ${presenceListId} generated.`)
 
                 // redirect to presence list page
                 history.push(`/course/${courseID}/presencelist/${presenceListId}`);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
-
-    const generateStatistics = async () => {
-        if (keycloak && initialized && course != null) {
-            try {
-                const response = await userApi.generateStatistics(keycloak.token, courseID, courseNo);
-                const statisticsId = response.data["statisticsId"]
-                console.log(`Statistics ${statisticsId} generated.`)
-
-                // redirect to statistics page
-                history.push(`/course/${courseID}/statistics/${statisticsId}`);
             } catch (error) {
                 console.log(error);
             }
