@@ -51,7 +51,6 @@ function Navbar() {
                     <Grid className="rightGrid">
                         {initialized && keycloak?.authenticated ?
                             <div style={{ display: 'inline-block' }}>
-                                <Button color="inherit"><a href="https://moviark.com/auth/realms/QResent2.0/account/">Account</a></Button>
                                 <User keycloak={keycloak} />
                                 <Logout keycloak={keycloak} />
                             </div> : <LoginPage></LoginPage>
