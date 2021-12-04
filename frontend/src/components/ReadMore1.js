@@ -21,7 +21,7 @@ return (
 	<div className="container">
 
 		<ReadMore>
-		Dorind să vină în sprijinul digitalizarii educației,  QResent permite un sistem de gestionat prezența  studenților la cursuri atât în format fizic, cât și în format online. Procesul constă în scanarea unui cod QR în divers momente ale unui curs.	
+		Dorind să vină în sprijinul digitalizarii educației,  QResent permite un sistem de gestionat prezența  studenților la cursuri atât în format fizic, cât și în format online. Procesul constă în scanarea unui cod QR în diverse momente ale unui curs.	
 		</ReadMore>
 
 	</div>
