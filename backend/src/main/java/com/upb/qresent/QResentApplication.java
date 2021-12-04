@@ -25,7 +25,6 @@ public class QResentApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		util.insertFakeDataInDB();
 	}
 
 	@Bean
