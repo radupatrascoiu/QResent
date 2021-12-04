@@ -20,7 +20,7 @@ public class PresenceListController {
     }
 
     @PostMapping("/presencelist/{courseId}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('professor')")
     public ResponseEntity<?> createPresenceList(@PathVariable(value="courseId") ObjectId courseId) {
         PresenceList presenceList = presenceListService.createPresenceList(courseId);
         if (presenceList == null) {
@@ -30,7 +30,7 @@ public class PresenceListController {
     }
 
     @GetMapping("/presencelist/{presencelistId}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('professor')")
     public ResponseEntity<?> getPresenceList(@PathVariable(value="presencelistId") ObjectId presencelistId) {
         PresenceList presenceList = presenceListService.refreshAndGetPresenceListByID(presencelistId);
         if (presenceList == null) {
@@ -41,7 +41,7 @@ public class PresenceListController {
 
 
     @GetMapping("/presencelist/export/{presencelistId}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('professor')")
     public ResponseEntity<?> export(@PathVariable(value="presencelistId") ObjectId presencelistId) {
         PresenceList presenceList = presenceListService.getPresenceListByID(presencelistId);
         if (presenceList == null) {
