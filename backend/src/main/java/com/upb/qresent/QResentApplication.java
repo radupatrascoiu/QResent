@@ -15,17 +15,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EnableMongoRepositories
-public class QResentApplication implements CommandLineRunner {
+public class QResentApplication {
 	@Autowired
 	Util util;
 
 	public static void main(String[] args) {
 		SpringApplication.run(QResentApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		util.insertFakeDataInDB();
 	}
 
 	@Bean
