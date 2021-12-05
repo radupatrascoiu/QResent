@@ -20,8 +20,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -60,15 +60,16 @@ public class QRCodeServiceTest {
     @Test
     public void recordStudentViaQR_nullcase() {
         ObjectId id = new ObjectId();
-        assertNotNull(qrCodeService.recordStudentViaQR(null,id,id,id));
+        assertNotNull(qrCodeService.recordStudentViaQR(null, id, id, id));
     }
+
     @Test
     public void recordStudentViaQR_notnullcase() {
         Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
         ObjectId id = new ObjectId();
         course.setId(id);
         courseRepository.save(course);
-        PresenceList presenceList = new PresenceList(id,id,id,new Date(),new Date(),new HashSet<ObjectId>());
+        PresenceList presenceList = new PresenceList(id, id, id, new Date(), new Date(), new HashSet<ObjectId>());
         User user = new User();
         user.setCourses(new HashSet<ObjectId>());
         user.getCourses().add(id);
@@ -77,7 +78,7 @@ public class QRCodeServiceTest {
         when(courseRepository.findById(anyString())).thenReturn(Optional.of(course));
         when(presenceListRepository.findById(anyString())).thenReturn(Optional.of(presenceList));
         when(qrCodeRepository.findById(anyString())).thenReturn(Optional.of(qrCode));
-        assertNotNull(qrCodeService.recordStudentViaQR(user,id,id,id));
+        assertNotNull(qrCodeService.recordStudentViaQR(user, id, id, id));
     }
 
 
