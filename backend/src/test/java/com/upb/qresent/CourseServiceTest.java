@@ -54,10 +54,7 @@ public class CourseServiceTest {
 
     @Test
     public void enrolStudents_usernull() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
         ObjectId id = new ObjectId();
-        course.setId(id);
-        courseRepository.save(course);
         User user = null;
 
         boolean check = courseService.enrollStudents(user, id.toString());
@@ -67,10 +64,6 @@ public class CourseServiceTest {
 
     @Test
     public void enrolStudents_coursIdnull() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
-        ObjectId id = new ObjectId();
-        course.setId(id);
-        courseRepository.save(course);
         User user = null;
         boolean check = courseService.enrollStudents(user, null);
 

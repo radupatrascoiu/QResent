@@ -48,10 +48,6 @@ public class PresenceListServiceTest {
 
     @Test
     public void createPresenceList_null() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
-        ObjectId id = new ObjectId();
-        course.setId(id);
-        courseRepository.save(course);
         assertNull(presenceListService.createPresenceList(new ObjectId()));
     }
 
@@ -69,19 +65,12 @@ public class PresenceListServiceTest {
 
     @Test
     public void getPresenceListByID() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
         ObjectId id = new ObjectId();
-        course.setId(id);
-        courseRepository.save(course);
         assertNull(presenceListService.getPresenceListByID(id));
     }
 
     @Test
     public void updatePresenceList() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
-        ObjectId id = new ObjectId();
-        course.setId(id);
-        courseRepository.save(course);
         PresenceList list = null;
         assertNull(presenceListService.updatePresenceList(list));
     }
