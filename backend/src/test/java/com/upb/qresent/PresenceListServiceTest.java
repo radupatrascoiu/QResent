@@ -99,8 +99,6 @@ public class PresenceListServiceTest {
     public void refreshAndGetPresenceListByIDisnotnull() {
         ObjectId id = new ObjectId();
         PresenceList list = new PresenceList(new ObjectId(),new ObjectId(),new ObjectId(),new Date(),new Date(),null);
-        when(presenceListRepository.findById(anyString())).thenReturn(Optional.of(list));
-//        when(qrCodeRepository.save(any(QRCode.class))).thenReturn(new QRCode());
         assertNotNull(presenceListService.refreshAndGetPresenceListByID(id));
     }
 
