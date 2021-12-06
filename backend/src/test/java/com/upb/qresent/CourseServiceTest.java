@@ -42,7 +42,7 @@ public class CourseServiceTest {
 
     @Test
     public void getCourseByID_allcases() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
+        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic","nimic","nimic");
         ObjectId id = new ObjectId();
         course.setId(id);
         courseRepository.save(course);
@@ -72,7 +72,7 @@ public class CourseServiceTest {
 
     @Test
     public void enrolStudents_coursenotnull() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
+        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic","nimic","nimic");
         ObjectId id = new ObjectId();
         course.setId(id);
         courseRepository.save(course);
@@ -86,7 +86,7 @@ public class CourseServiceTest {
 
     @Test
     public void enrolStudents_coursenotnull2() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
+        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic","nimic","nimic");
         ObjectId id = new ObjectId();
         course.setId(id);
         courseRepository.save(course);
@@ -99,7 +99,7 @@ public class CourseServiceTest {
 
     @Test
     public void enrolStudents_coursenull() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
+        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic","nimic","nimic");
         ObjectId id = new ObjectId();
         course.setId(id);
         courseRepository.save(course);
@@ -113,7 +113,7 @@ public class CourseServiceTest {
 
     @Test
     public void getCoursesList_usernull() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
+        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic","nimic","nimic");
         ObjectId id = new ObjectId();
         course.setId(id);
         courseRepository.save(course);
@@ -122,8 +122,18 @@ public class CourseServiceTest {
     }
 
     @Test
+    public void getCourseProjection() {
+        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic","nimic","nimic");
+        ObjectId id = new ObjectId();
+        course.setId(id);
+        courseRepository.save(course);
+        User user = new User("Alex", "Student", "", "", null);
+        assertNotNull(courseService.getCourseProjection(course));
+    }
+
+    @Test
     public void getCoursesList_usernotnull() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
+        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic","nimic","nimic");
         ObjectId id = new ObjectId();
         course.setId(id);
         courseRepository.save(course);

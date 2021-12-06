@@ -8,6 +8,7 @@ import com.upb.qresent.presentList.PresenceListRepository;
 import com.upb.qresent.presentList.PresenceListService;
 import com.upb.qresent.qrCode.QRCode;
 import com.upb.qresent.qrCode.QRCodeRepository;
+import com.upb.qresent.user.UserRepository;
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -38,12 +40,15 @@ public class PresenceListServiceTest {
     @Mock
     private QRCodeRepository qrCodeRepository;
 
+    @Mock
+    private UserRepository userRepository;
+
     private PresenceListService presenceListService;
 
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        presenceListService = new PresenceListService(presenceListRepository, courseRepository, qrCodeRepository);
+        presenceListService = new PresenceListService(presenceListRepository, courseRepository, qrCodeRepository,userRepository);
     }
 
     @Test
@@ -53,7 +58,7 @@ public class PresenceListServiceTest {
 
     @Test
     public void createPresenceList_notnull() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
+        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic","nimic","nimic");
         ObjectId id = new ObjectId();
         course.setId(id);
         courseRepository.save(course);
@@ -95,6 +100,14 @@ public class PresenceListServiceTest {
         PresenceList list = new PresenceList(new ObjectId(), new ObjectId(), new ObjectId(), new Date(), new Date(), null);
         when(qrCodeRepository.save(any(QRCode.class))).thenReturn(new QRCode());
         assertNull(presenceListService.updateQR(list));
+    }
+
+    @Test
+    public void getPresenceListProjection() {
+        PresenceList list = new PresenceList(new ObjectId(), new ObjectId(), new ObjectId(), new Date(), new Date(), new HashSet<>());
+        list.setId(new ObjectId());
+        list.insertStudentIntoPresenceList(new ObjectId());
+        assertNotNull(presenceListService.getPresenceListProjection(list));
     }
 
 }

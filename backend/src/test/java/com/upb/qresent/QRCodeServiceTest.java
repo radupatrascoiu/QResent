@@ -7,6 +7,7 @@ import com.upb.qresent.presentList.PresenceListRepository;
 import com.upb.qresent.qrCode.QRCode;
 import com.upb.qresent.qrCode.QRCodeRepository;
 import com.upb.qresent.qrCode.QRCodeService;
+import com.upb.qresent.statistics.StatisticsRepository;
 import com.upb.qresent.user.User;
 import org.bson.types.ObjectId;
 import org.junit.Before;
@@ -36,12 +37,15 @@ public class QRCodeServiceTest {
     @Mock
     private QRCodeRepository qrCodeRepository;
 
+    @Mock
+    StatisticsRepository statisticsRepository;
+
     private QRCodeService qrCodeService;
 
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        qrCodeService = new QRCodeService(qrCodeRepository, presenceListRepository, courseRepository);
+        qrCodeService = new QRCodeService(qrCodeRepository, presenceListRepository, courseRepository,statisticsRepository);
     }
 
     @Test
@@ -65,7 +69,7 @@ public class QRCodeServiceTest {
 
     @Test
     public void recordStudentViaQR_notnullcase() {
-        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic", "nimic", new HashSet<String>());
+        Course course = new Course("Mate1", new ObjectId(), (short) 1, "nimic", "nimic","nimic","nimic");
         ObjectId id = new ObjectId();
         course.setId(id);
         courseRepository.save(course);
