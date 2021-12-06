@@ -73,6 +73,14 @@ Permită studentului să:
 &nbsp;
 
 
+### Diagrama de arhitectura
+\
+&nbsp;
+
+![Diagrama de arhitectura](./Diagrama%20de%20arhitectura.png)
+\
+&nbsp;
+
 ### Schema bazei de date
 \
 &nbsp;
