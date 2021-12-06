@@ -1,11 +1,8 @@
 package com.upb.qresent.course;
 
 import com.upb.qresent.user.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.types.ObjectId;
-
 import java.util.Set;
 
 @Getter
@@ -18,7 +15,7 @@ public class CourseDto {
     private String requirements;
     private String bonuses;
     private short credits;
-    private Set<String> schedule;
+    private String schedule;
     private boolean isEnrolled;
 
     public CourseDto(Course course, boolean isEnrolled, User professor) {

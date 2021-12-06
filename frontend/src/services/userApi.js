@@ -2,7 +2,18 @@ import axios from 'axios';
 import { config } from '../constants';
 
 export const userApi = {
-    getStudent, getCourse, getUsers, getCourses, studentCourseRoll, generatePresenceList, getPresenceList, recordQR
+    getStudent,
+    getCourse,
+    getUsers,
+    getCourses,
+    studentCourseRoll,
+    generatePresenceList,
+    getPresenceList,
+    recordQR,
+    exportPresenceList,
+    generateStatistics,
+    adminCourseCreate,
+    editCourse
 }
 
 function getStudent(token) {
@@ -24,10 +35,39 @@ function getCourses(token) {
 function studentCourseRoll(token, course) {
     return instance.put(`/api/courses/enroll`,
         { courseId: course }, {
-            headers: {
-                'Authorization': bearerAuth(token)
-            }
-        })
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
+
+function adminCourseCreate(token, courseName, professorMail) {
+    return instance.put(`/api/courses/create`,
+        {
+            courseName: courseName,
+            professorMail: professorMail
+        }, {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
+
+function editCourse(token, courseId, name, bonuses, infos, requirements, schedule, credits) {
+    return instance.put(`/api/courses/edit/`,
+        {
+            courseId: courseId,
+            name: name,
+            bonuses: bonuses,
+            infos: infos,
+            requirements: requirements,
+            schedule: schedule,
+            credits: credits
+        }, {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
 }
 
 function getUsers(token) {
@@ -54,6 +94,14 @@ function generatePresenceList(token, courseID) {
     })
 }
 
+function generateStatistics(token, courseId, courseNo) {
+    return instance.get(`/api/statistics/${courseId}/${courseNo}`, {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
+
 function getPresenceList(token, presenceListID) {
     return instance.get(`/api/presencelist/${presenceListID}`, {
         headers: {
@@ -64,6 +112,14 @@ function getPresenceList(token, presenceListID) {
 
 function recordQR(token, courseId, presenceListID, qrID) {
     return instance.post(`/api/qr/record/${courseId}/${presenceListID}/${qrID}`, "", {
+        headers: {
+            'Authorization': bearerAuth(token)
+        }
+    })
+}
+
+function exportPresenceList(token, presencelistId) {
+    return instance.get(`/api/presencelist/export/${presencelistId}`, {
         headers: {
             'Authorization': bearerAuth(token)
         }

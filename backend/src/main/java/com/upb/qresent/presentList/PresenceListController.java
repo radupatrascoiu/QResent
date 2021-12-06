@@ -19,16 +19,6 @@ public class PresenceListController {
         this.courseRepository = courseRepository;
     }
 
-    @PostMapping("/create")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> aiurealea() {
-        PresenceList presenceList = presenceListService.createPresenceList(courseRepository.findByName("UBD").getId());
-        if (presenceList == null) {
-            return ResponseEntity.badRequest().body(new ResponseDto("Failed", ""));
-        }
-        return ResponseEntity.ok().body(new ResponseDto("Success", presenceList.getId().toString()));
-    }
-
     @PostMapping("/presencelist/{courseId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createPresenceList(@PathVariable(value="courseId") ObjectId courseId) {
@@ -47,5 +37,17 @@ public class PresenceListController {
             return ResponseEntity.badRequest().body(new ResponseDto("We couldn't find the present list", null));
         }
         return ResponseEntity.ok().body(new ResponseDto("Success", presenceList));
+    }
+
+
+    @GetMapping("/presencelist/export/{presencelistId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> export(@PathVariable(value="presencelistId") ObjectId presencelistId) {
+        PresenceList presenceList = presenceListService.getPresenceListByID(presencelistId);
+        if (presenceList == null) {
+            return ResponseEntity.badRequest().body(new ResponseDto("We couldn't find the present list", null));
+        }
+        Object presenceListProjection = presenceListService.getPresenceListProjection(presenceList);
+        return ResponseEntity.ok().body(new ResponseDto("Success", presenceListProjection));
     }
 }

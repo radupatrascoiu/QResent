@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "${frontend.domain}", maxAge = 3600, allowCredentials = "true")
@@ -36,12 +37,14 @@ public class CourseController {
 
     @GetMapping("/{courseId}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> getCourse(@PathVariable(value="courseId") ObjectId courseId) {
+    public ResponseEntity<?> getCourse(@PathVariable(value = "courseId") ObjectId courseId) {
         var course = courseService.getCourseByID(courseId);
-        if (course != null) {
-            return ResponseEntity.ok(new ResponseDto("Success", course));
+        if (course == null) {
+            return ResponseEntity.badRequest()
+                    .body(new ResponseDto("This course does not exists.", false));
         }
-        return ResponseEntity.badRequest().body(new ResponseDto("This course does not exists.", false));
+        Object courseProjection = courseService.getCourseProjection(course);
+        return ResponseEntity.ok(new ResponseDto("Success", courseProjection));
     }
 
     @PutMapping("/enroll")
@@ -51,6 +54,43 @@ public class CourseController {
         var user = userService.getRequestUser(request);
         if (courseService.enrollStudents(user, courseBody.getCourseId())) {
             return ResponseEntity.ok(new ResponseDto("Success", true));
+        }
+        return ResponseEntity.badRequest().body(new ResponseDto("Bad request", false));
+    }
+
+    @PutMapping("/create")
+    @PreAuthorize("hasRole('admin')")
+    public ResponseEntity<?> createCourse(@RequestBody CourseCreateRequest createRequest,
+                                          HttpServletRequest request) {
+        var professor = userRepository.findByLdapId(createRequest.getProfessorMail());
+        if (professor != null) {
+            if (professor.getRole().contains("professor")) {
+                Course course = new Course();
+                course.setName(createRequest.getCourseName());
+                course.setProfessorId(professor.getId());
+                return ResponseEntity.ok(new ResponseDto("Success", courseRepository.save(course)));
+            }
+        }
+        return ResponseEntity.badRequest().body(new ResponseDto("Bad request", false));
+    }
+
+    @PutMapping("/edit")
+    @PreAuthorize("hasRole('professor')")
+    public ResponseEntity<?> editCourse(@RequestBody CourseEditRequest editRequest,
+                                        HttpServletRequest request) {
+        var currentUser = userService.getRequestUser(request);
+        if (currentUser != null) {
+            var course = courseRepository.findById(editRequest.getCourseId()).orElse(null);
+            if (course != null && currentUser.getId().equals(course.getProfessorId())) {
+                course.setBonuses(editRequest.getBonuses());
+                course.setCredits(editRequest.getCredits());
+                course.setInfos(editRequest.getInfos());
+                course.setRequirements(editRequest.getRequirements());
+                course.setName(editRequest.getName());
+                course.setSchedule(editRequest.getSchedule());
+
+                return ResponseEntity.ok(courseRepository.save(course));
+            }
         }
         return ResponseEntity.badRequest().body(new ResponseDto("Bad request", false));
     }

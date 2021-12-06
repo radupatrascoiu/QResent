@@ -4,6 +4,8 @@ import com.upb.qresent.course.Course;
 import com.upb.qresent.course.CourseRepository;
 import com.upb.qresent.qrCode.QRCode;
 import com.upb.qresent.qrCode.QRCodeRepository;
+import com.upb.qresent.user.User;
+import com.upb.qresent.user.UserRepository;
 import com.upb.qresent.utils.Constants;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
@@ -11,21 +13,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PresenceListService {
     private final PresenceListRepository presenceListRepository;
     private final CourseRepository courseRepository;
     private final QRCodeRepository qrCodeRepository;
+    private final UserRepository userRepository;
 
-
-    public PresenceListService(PresenceListRepository presenceListRepository, CourseRepository courseRepository, QRCodeRepository qrCodeRepository) {
+    public PresenceListService(PresenceListRepository presenceListRepository, CourseRepository courseRepository, QRCodeRepository qrCodeRepository, UserRepository userRepository) {
         this.presenceListRepository = presenceListRepository;
         this.courseRepository = courseRepository;
         this.qrCodeRepository = qrCodeRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
@@ -79,6 +80,23 @@ public class PresenceListService {
 
     public PresenceList getPresenceListByID(ObjectId presencelistId) {
         return presenceListRepository.findById(presencelistId.toString()).orElse(null);
+    }
+
+    public List<PresenceList> getPresenceListsByCourse(ObjectId courseId) {
+        return presenceListRepository.findByCourseId(courseId);
+    }
+
+    public Map<String, Object> getPresenceListProjection(PresenceList presenceList) {
+        List<User> students = new ArrayList<>();
+        for (ObjectId studentID : presenceList.getStudents()) {
+            User user = userRepository.findById(studentID.toString()).orElse(null);
+            if(user != null) { user.setRole(""); students.add(user); }
+        }
+        return Map.ofEntries(
+                Map.entry("id", presenceList.getId().toString()),
+                Map.entry("students", students),
+                Map.entry("timestampCreated", presenceList.getTimestampCreated())
+        );
     }
 
     public PresenceList updatePresenceList(PresenceList presenceList) {

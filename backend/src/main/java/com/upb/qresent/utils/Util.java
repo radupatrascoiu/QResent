@@ -10,6 +10,7 @@ import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,14 +27,20 @@ public class Util {
     private QRCodeRepository qrCodeRepository;
 
     public void insertFakeDataInDB() {
+        var initialized = courseRepository.findByName("UBD") != null;
+
+        if (initialized) {
+            return;
+        }
+
         // Clear the db
         courseRepository.deleteAll();
         presenceListRepository.deleteAll();
         qrCodeRepository.deleteAll();
 
         // Insert 2 courses
-        Course course1 = courseRepository.save(new Course("UBD", null, (short) 3, "Cancer", "Sa ridici mana", "Nu exista", Set.of("Luni: 10-12", "Vineri: 18-20")));
-        Course course2 = courseRepository.save(new Course("PP", null, (short) 6, "Greu rau", "Sa rupi", "Sanki", Set.of("Luni: 12-14", "Joi: 18-20")));
+        Course course1 = courseRepository.save(new Course("UBD", null, (short) 3, "Cancer", "Sa ridici mana", "Nu exista", "Luni: 10-12"));
+        Course course2 = courseRepository.save(new Course("PP", null, (short) 6, "Greu rau", "Sa rupi", "Sanki", "Luni: 12-14"));
 
         // Create and set professor for the first course
         User professor1 = userRepository.findByLdapId("boicea.alexandru@stud.com");
@@ -50,7 +57,7 @@ public class Util {
         }
         course2.setProfessorId(professor2.getId());
         courseRepository.save(course2);
-        
+
         // Enroll student to the first course
         User student = userRepository.findByLdapId("patrionpatrick@gmail.com");
         if (student != null) {

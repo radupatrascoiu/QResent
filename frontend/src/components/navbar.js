@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { useKeycloak } from '@react-keycloak/web';
 import '../App.css';
 import img from "../img/logoQR2.png"
+import AuthorizedFunction from '../utils/authorization';
 
 function Navbar() {
     const { initialized, keycloak } = useKeycloak();
@@ -41,13 +42,15 @@ function Navbar() {
                                         <Link to="/courses">Courses</Link>
                                     </Button>
                                 }
+                                {AuthorizedFunction(keycloak, ['admin']) && <Button color="inherit">
+                                    <Link to="/create/course">Add Course</Link>
+                                </Button>}
                             </Typography>
                         </Grid>
                     </Grid>
                     <Grid className="rightGrid">
                         {initialized && keycloak?.authenticated ?
                             <div style={{ display: 'inline-block' }}>
-                                <Button color="inherit"><a href="https://moviark.com/auth/realms/QResent2.0/account/">Account</a></Button>
                                 <User keycloak={keycloak} />
                                 <Logout keycloak={keycloak} />
                             </div> : <LoginPage></LoginPage>

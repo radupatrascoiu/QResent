@@ -17,7 +17,7 @@ class User extends Component {
 
     render() {
         return (
-        <Button color="inherit"><Link to="/secured">{this.state.name}</Link></Button>
+        <Button color="inherit"><a target="_blank" href="https://moviark.com/auth/realms/QResent2.0/account/">{this.state.name}</a></Button>
         );
     }
 }

@@ -21,9 +21,9 @@ public class Course {
     private String requirements;
     private String bonuses;
     private short credits;
-    private Set<String> schedule;
+    private String schedule;
 
-    public Course(String name, ObjectId professorId, short credits, String infos, String requirements, String bonuses, Set<String> schedule) {
+    public Course(String name, ObjectId professorId, short credits, String infos, String requirements, String bonuses, String schedule) {
         this.name = name;
         this.professorId = professorId;
         this.infos = infos;
@@ -33,13 +33,6 @@ public class Course {
         this.credits = credits;
     }
 
-
-
-    public boolean insertIntervalIntoSchedule(String interval) {
-        return schedule.add(interval);
-    }
-
-    public boolean deleteIntervalFromSchedule(String interval) {
-        return schedule.remove(interval);
+    public Course() {
     }
 }
